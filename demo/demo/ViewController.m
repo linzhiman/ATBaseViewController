@@ -32,7 +32,7 @@
     {{
         UIButton *aButton = [UIButton new];
         aButton.backgroundColor = [UIColor blueColor];
-        aButton.frame = CGRectMake(KXTransformViewWidth - 100, 0, 100, 30);
+        aButton.frame = CGRectMake(self.transformViewWidth - 100, 0, 100, 30);
         [aButton setTitle:@"right top" forState:UIControlStateNormal];
         [self.transformView addSubview:aButton];
     }}
@@ -40,7 +40,7 @@
     {{
         UIButton *aButton = [UIButton new];
         aButton.backgroundColor = [UIColor blueColor];
-        aButton.frame = CGRectMake(0, KXTransformViewHeight - 30, 100, 30);
+        aButton.frame = CGRectMake(0, self.transformViewHeight - 30, 100, 30);
         [aButton setTitle:@"left bottom" forState:UIControlStateNormal];
         [self.transformView addSubview:aButton];
     }}
@@ -48,7 +48,7 @@
     {{
         UIButton *aButton = [UIButton new];
         aButton.backgroundColor = [UIColor blueColor];
-        aButton.frame = CGRectMake(KXTransformViewWidth - 100, KXTransformViewHeight - 30, 100, 30);
+        aButton.frame = CGRectMake(self.transformViewWidth - 100, self.transformViewHeight - 30, 100, 30);
         [aButton setTitle:@"right bottom" forState:UIControlStateNormal];
         [self.transformView addSubview:aButton];
     }}

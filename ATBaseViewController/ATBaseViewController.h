@@ -8,34 +8,36 @@
 
 #import <UIKit/UIKit.h>
 
-#define iphone6OriginalWidth 375
-#define iphone6OriginalHeight 667
+#define AT_IPHONE6_WIDTH 375
+#define AT_IPHONE6_HEIGHT 667
 
-#define KXTransformScreenWidth ([UIScreen mainScreen].bounds.size.width)
-#define KXTransformScreenHeight ([UIScreen mainScreen].bounds.size.height)
-#define KXTransformNavBarHeight (KXTransformScreenHeight > 800 ? 88 : 64)
-#define KXTransformViewWidth (KXTransformScreenWidth != 375 ? KXTransformScreenWidth/(KXTransformScreenHeight/667.0) : 375)
-#define KXTransformViewHeight (KXTransformScreenHeight > 800 ? 812 : 667)
-#define KXTransformViewWidthWithoutNavBar (KXTransformScreenWidth != 375 ? KXTransformScreenWidth/((KXTransformScreenHeight-KXTransformNavBarHeight)/(667.0-KXTransformNavBarHeight)) : 375)
-#define KXTransformViewHeightWithoutNavBar (KXTransformViewHeight - KXTransformNavBarHeight)
+#define AT_SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define AT_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+#define AT_IPHONEX_SET (AT_SCREEN_WIDTH >= 375.f && AT_SCREEN_HEIGHT >= 812.f )//X,XR,XS
+#define AT_STATUSBAR_HEIGHT (AT_IPHONEX_SET ? 44.f : 20.f)
+#define AT_STATUSBAR_AND_NAVIGATION_BAR_HEIGHT (AT_IPHONEX_SET ? 88.f : 64.f)
+
+typedef NS_ENUM(NSInteger, ATTransformViewType)
+{
+    ATTransformViewType_FullScreen,
+    ATTransformViewType_NavBarShow
+};
+
+#define ATTransformViewWidthForFullScreen ([ATBaseViewController transformViewWidthFor:ATTransformViewType_FullScreen])
 
 @interface ATBaseViewController : UIViewController
 
-/**
- *  基于iPhone 6的尺寸做transform，注意subView宽度需要通过KXTransformViewWidth这个宏指定！
- *  以下数据为全屏场景下，有导航栏时相应减去导航栏高度；
- *  1、在iPhone X上宽度一致，不做缩放；安全区的适配不变；此时transformView的大小375*812；
- *  2、在Plus机型上，缩放因子为736/667.0，此时transformView的大小约为375*667；
- *  3、在iPhone 5/5S/5C上，缩放因子为568/667.0，此时transformView的大小约为375*667；
- *  4、在iPad/iPhone 4/4S上，缩放因子为480/667.0，此时transformView的大小约为445*667；
- */
++ (CGFloat)transformViewWidthFor:(ATTransformViewType)type;
+
 @property (nonatomic, strong) UIView *transformView;
+@property (nonatomic, assign) BOOL usingTransformView;
+@property (nonatomic, assign, readonly) CGFloat transformViewWidth;
+@property (nonatomic, assign, readonly) CGFloat transformViewHeight;
 
 /**
  *  viewDidLoad前设置，影响transformView高度；
  */
 @property (nonatomic, assign) BOOL navigationBarHidden;
-
-@property (nonatomic, assign) BOOL usingTransformView;
 
 @end
